@@ -1,0 +1,213 @@
+# Questo file è stato generato automaticamente da i3-config-wizard(1).
+# Non verrà sovrascritto, quindi modificalo come preferisci.
+#
+# Se dovessi cambiare il layout della tastiera, elimina
+# questo file e ri-esegui i3-config-wizard(1).
+#
+
+# file di configurazione i3 (v4)
+#
+# Consulta https://i3wm.org/docs/userguide.html per una guida completa!
+
+set $mod Mod4
+
+# Font per i titoli delle finestre. Verrà usato anche dalla barra a meno che 
+# non venga specificato un font diverso nel blocco bar {} qui sotto.
+font pango:monospace 8
+
+# Questo font è ampiamente installato, fornisce molti glifi unicode, rendering
+# del testo da destra a sinistra e scalabilità su display retina/hidpi (grazie a pango).
+#font pango:DejaVu Sans Mono 8
+
+# Avvia i file .desktop XDG autostart usando dex. Vedi anche
+# https://wiki.archlinux.org/index.php/XDG_Autostart
+exec --no-startup-id dex --autostart --environment i3
+
+# La combinazione di xss-lock, nm-applet e pactl è una scelta popolare,
+# quindi sono inclusi qui come esempio. Modifica come ritieni opportuno.
+
+# xss-lock acquisisce un blocco di inibizione sospensione logind e userà i3lock per bloccare
+# lo schermo prima della sospensione. Usa loginctl lock-session per bloccare lo schermo.
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+# NetworkManager è il modo più popolare per gestire le reti wireless su Linux,
+# e nm-applet è una GUI indipendente dall'ambiente desktop per il vassoio di sistema.
+exec --no-startup-id nm-applet
+
+# Usa pactl per regolare il volume in PulseAudio.
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# Usa Mouse+$mod per trascinare le finestre fluttuanti nella posizione desiderata
+floating_modifier $mod
+
+# sposta le finestre affiancate tramite trascinamento cliccando col tasto sinistro sulla barra del titolo,
+# o cliccando ovunque nella finestra mentre si tiene premuto il modificatore floating.
+tiling_drag modifier titlebar
+
+# avvia un terminale
+bindsym $mod+Return exec i3-sensible-terminal
+
+# chiudi la finestra attiva
+bindsym $mod+Shift+q kill
+
+# avvia dmenu (un lanciatore di programmi)
+bindsym $mod+d exec --no-startup-id dmenu_run
+# Un sostituto più moderno di dmenu è rofi:
+# bindcode $mod+40 exec "rofi -modi drun,run -show drun"
+# C'è anche i3-dmenu-desktop che mostra solo le applicazioni con un file
+# .desktop. È un wrapper attorno a dmenu, quindi devi averlo installato.
+# bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
+
+# cambia focus
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+ograve focus right
+
+# in alternativa, puoi usare i tasti cursore:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# sposta la finestra attiva
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+ograve move right
+
+# in alternativa, puoi usare i tasti cursore:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# dividi in orientamento orizzontale
+bindsym $mod+h split h
+
+# dividi in orientamento verticale
+bindsym $mod+v split v
+
+# entra in modalità schermo intero per il contenitore attivo
+bindsym $mod+f fullscreen toggle
+
+# cambia layout del contenitore (impilato, a schede, attiva/disattiva divisione)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# attiva/disattiva affiancamento / fluttuante
+bindsym $mod+Shift+space floating toggle
+
+# cambia focus tra finestre affiancate / fluttuanti
+bindsym $mod+space focus mode_toggle
+
+# focus sul contenitore genitore
+bindsym $mod+a focus parent
+
+# focus sul contenitore figlio
+#bindsym $mod+d focus child
+
+# Definisci nomi per le aree di lavoro predefinite per cui configureremo le scorciatoie più avanti.
+# Usiamo variabili per evitare di ripetere i nomi in più punti.
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# passa all'area di lavoro
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# sposta il contenitore attivo nell'area di lavoro
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# ricarica il file di configurazione
+bindsym $mod+Shift+c reload
+# riavvia i3 sul posto (preserva il layout/sessione, può essere usato per aggiornare i3)
+bindsym $mod+Shift+r restart
+# esci da i3 (termina la sessione X)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Hai premuto la scorciatoia di uscita. Vuoi davvero uscire da i3? Questo terminerà la tua sessione X.' -B 'Sì, esci da i3' 'i3-msg exit'"
+
+# ridimensiona finestra (puoi anche usare il mouse per questo)
+mode "resize" {
+        # Questi binding si attivano non appena entri in modalità ridimensionamento
+
+        # Premendo sinistra si ridurrà la larghezza della finestra.
+        # Premendo destra si aumenterà la larghezza della finestra.
+        # Premendo su si ridurrà l'altezza della finestra.
+        # Premendo giù si aumenterà l'altezza della finestra.
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym ograve resize grow width 10 px or 10 ppt
+
+        # stessi binding, ma per i tasti freccia
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # torna al normale: Invio o Escape o $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# Avvia i3bar per mostrare una barra delle aree di lavoro (più le informazioni di sistema i3status
+# se disponibili)
+
+#MODIFICHE
+
+#doppio monitor con arandr
+exec --no-startup-id ~/.screenlayout/monitor.sh
+
+#polybar
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+# Modalità Menu Alimentazione
+set $mode_system "SISTEMA: [l]blocca [e]esci [r]riavvia [s]spegni [h]iberna"
+mode $mode_system {
+    bindsym l exec --no-startup-id i3lock -c 000000, mode "default"
+    bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym s exec --no-startup-id systemctl poweroff, mode "default"
+    bindsym h exec --no-startup-id systemctl hibernate, mode "default"
+    
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+Shift+m mode $mode_system
+
+#aggiungi i layout tastiere
+exec_always --no-startup-id setxkbmap -layout us,it
